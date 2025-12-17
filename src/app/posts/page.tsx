@@ -6,11 +6,35 @@ export const metadata: Metadata = {
   description: "Post page"
 }
 
-export default function Posts() {
+interface Response {
+  posts: any[]
+}
+
+export default async function Posts() {
+
+  async function getPosts() {
+    const res = await fetch("https://dummyjson.com/posts");
+    const data: Response = await res.json();
+    return data.posts;
+  }
+
+  const posts: any[] = await getPosts();
+
   return (
-    <div>
-      Posts
-      <Link href="/">Home</Link>
+    <div className="flex flex-col gap-2 p-2">
+
+      <h2>Posts</h2>
+
+      <div className="flex flex-col gap-4">
+        {posts.map((post: any) => (
+          <div key={post.id} className="p-2 bg-gray-800 rounded-md text-white">
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <Link href={`/posts/${post.id}`} className="text-blue-600">See more details</Link>
+          </div>
+        ))}
+      </div>
+
     </div>
   )
 }
