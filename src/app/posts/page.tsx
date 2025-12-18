@@ -21,7 +21,7 @@ export default async function Posts() {
   const posts: any[] = await getPosts();
 
   return (
-    <div className="flex flex-col gap-2 p-2">
+    <div className="flex flex-col gap-2 p-8">
 
       <h2>Posts</h2>
 

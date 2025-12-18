@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { PostBody } from "./post-body";
 
 export default async function PostId({ params }: {
   params: Promise<{id: string}>
@@ -5,13 +7,13 @@ export default async function PostId({ params }: {
 
   const { id } = await params;
 
-  const res = await fetch(`https://dummyjson.com/posts/${id}`);
-  let data = await res.json();
-
   return (
-    <div>
-      <h2>{data.title}</h2>
-      <p>{data.body}</p>
+    <div className="p-8 flex flex-col gap-4">
+      <div className="p-4 rounded-lg border border-gray-700">
+        <Suspense fallback={<div>Loading post...</div>}>
+          <PostBody id={id} />
+        </Suspense>
+      </div>
     </div>
   )
 }
